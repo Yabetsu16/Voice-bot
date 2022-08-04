@@ -45,8 +45,17 @@ namespace Voice_bot
         {
             String result = e.Result.Text;
             int resp = Array.IndexOf(grammarFile, result);
-            Debug.WriteLine(resp);
-            say(responseFile[resp]);
+
+            if (responseFile[resp].IndexOf('+') == 0)
+            {
+                List<string> response = responseFile[resp].Replace('+', ' ').Split('/').Reverse().ToList();
+                Random random = new Random();
+                say(response[random.Next(response.Count)]);
+            }
+            else
+            {
+                say(responseFile[resp]);
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
